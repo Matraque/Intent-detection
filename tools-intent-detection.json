@@ -1,0 +1,82 @@
+[
+    {
+      "type": "function",
+      "function": {
+        "name": "Creation_dossier_kbis",
+        "description": "L'utilisateur partage un extrait de kbis ou souhaite créer un dossier",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Redaction_non_juridique",
+        "description": "Redaction de correspondances exclusivement non juridiques (email, courrier, lettre, newsletter ou publication réseaux sociaux)",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Redaction_juridique",
+        "description": "Redaction de contenu juridique",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Resume",
+        "description": "Resume un texte",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Salutations",
+        "description": "Reponse aux salutations et demande les fonctionnalités de l'assistant IA",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Traduction",
+        "description": "Traduction de contenu en une autre langue",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Information_utilisateur",
+        "description": "Informations sur les utilisateurs (id, type, etc.)",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    }, 
+    {
+      "type": "function",
+      "function": {
+        "name": "Information_dossier",
+        "description": "Informations generales et financieres sur les dossiers",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Information_personne_societe",
+        "description": "Informations et factures d'une personne ou une société",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "Autre_demande",
+        "description": "Traite toutes les demandes qui ne sont pas couvertes par les autres fonctions",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    }
+  ]
