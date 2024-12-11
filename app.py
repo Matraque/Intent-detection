@@ -38,7 +38,7 @@ with open("tools-intent-detection.json", "r", encoding="utf-8") as file:
 # API configuration
 url = st.secrets["url"]
 headers = {
-    'api-key': os.getenv('API_KEY'),
+    'api-key': st.secrets["key"],
     'Content-Type': 'application/json'
 }
 
