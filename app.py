@@ -11,7 +11,7 @@ def check_password():
         """Checks whether a password entered by the user is correct."""
         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
             st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Don't store the password.
+            del st.session_state["password"]
         else:
             st.session_state["password_correct"] = False
 
@@ -30,14 +30,13 @@ def check_password():
 
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
-# Load tools
 
 # Load tools
 with open("tools-intent-detection.json", "r", encoding="utf-8") as file:
     tools = json.load(file)
 
 # API configuration
-url = 'https://openai-dev-fra-001.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21'
+url = st.secrets["url"]
 headers = {
     'api-key': os.getenv('API_KEY'),
     'Content-Type': 'application/json'
@@ -172,3 +171,5 @@ if submitted:
                 <p><strong>Category:</strong> {category}</p>
             </div>
         """, unsafe_allow_html=True)
+        
+st.markdown('<p style="text-align: right; color: gray; font-size: 0.8em;">Fait avec ❤️ par Mathieu</p>', unsafe_allow_html=True)
