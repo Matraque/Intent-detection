@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import os
 import json
 import hmac
 
@@ -31,24 +30,18 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
-import streamlit as st
-import json
-import requests
-import os
-
-# Set a universal page config at the top
 st.set_page_config(
     page_title="Poly Intent Detection",
     page_icon="🛣️",
     layout="centered"
 )
 
-# Load data from JSON for the first app
+# Load data from JSON for Intent-Workflow Documentation
 def load_data(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-# App function for the first app
+# Intent-Workflow
 def app1():
     data = load_data('data.json')
 
@@ -77,18 +70,17 @@ def app1():
                 with st.expander(tool['name']):
                     st.write(f"**API Prompt:** {tool['api_prompt']}")
 
-# Load tools for the second app
+# Load tools
 with open("tools-intent-detection.json", "r", encoding="utf-8") as file:
     tools = json.load(file)
 
-# API configuration for the second app
 url = st.secrets["url"]
 headers = {
     'api-key': st.secrets["key"],
     'Content-Type': 'application/json'
 }
 
-# Mapping function to class for the second app
+# Mapping function to class
 function_mapping = {
     "Creation_dossier_kbis": 'POST',
     "Redaction_non_juridique": 'DRAFT',
@@ -102,7 +94,6 @@ function_mapping = {
     "Autre_demande": '0'
 }
 
-# Function to get model response for the second app
 def get_model_response(user_prompt):
     messages = [
         {
@@ -162,7 +153,6 @@ def intent_detection():
         
     st.markdown('<p style="text-align: right; color: gray; font-size: 0.8em;">Fait avec ❤️ par Mathieu</p>', unsafe_allow_html=True)
 
-# Main function to run the combined app
 def main():
     # Sidebar for navigation
     st.sidebar.title("Navigation")

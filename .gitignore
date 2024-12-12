@@ -2,4 +2,6 @@
 .gradio/
 .env
 venv/
-
+dataset.xlsx
+dataset_with_predictions.xlsx
+intent-detection.py

@@ -11,7 +11,7 @@
           { "name": "Users_GetMe", "api_prompt": "None" },
           { "name": "DossierNaturesPoles_GetDossierNaturesPoles", "api_prompt": "None" },
           { "name": "Dossiers_PostDossierDroitDesSocietes", "api_prompt": "None" },
-          { "name": "Persons_GetCorporateForms", "api_prompt": "None" }
+          { "name": "Persons_GetCorporateForms", "api_prompt": "Si la forme recherchée ne correspond pas exactement à une des formes longues ou courtes de la liste, demandez laquelle sélectionner" }
         ]
       }
     },
