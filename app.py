@@ -31,18 +31,64 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
-# Load tools
+import streamlit as st
+import json
+import requests
+import os
+
+# Set a universal page config at the top
+st.set_page_config(
+    page_title="Poly Intent Detection",
+    page_icon="🛣️",
+    layout="centered"
+)
+
+# Load data from JSON for the first app
+def load_data(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+# App function for the first app
+def app1():
+    data = load_data('data.json')
+
+    st.title("Intent-Workflow Documentation")
+    st.write("""
+        Présentation de la relation entre une intention et son workflow, le système prompt et les tools associés à chaque workflow et l'API prompt associé à chaque tool.
+    """)
+
+    selected_intention = st.selectbox(
+        "Select an Intention", 
+        [i['name'] for i in data['intentions']]
+    )
+
+    # Display the selected intention's details
+    for intention in data['intentions']:
+        if intention['name'] == selected_intention:
+            st.header(f"Intent: {intention['name']}")
+            st.write(f"**Description:** {intention['description']}")
+
+            category = intention['category']
+            st.subheader(f"Workflow : {category['name']}")
+            st.write(f"**System Prompt:** {category['system_prompt']}")
+
+            st.subheader("Tools")
+            for tool in category['tools']:
+                with st.expander(tool['name']):
+                    st.write(f"**API Prompt:** {tool['api_prompt']}")
+
+# Load tools for the second app
 with open("tools-intent-detection.json", "r", encoding="utf-8") as file:
     tools = json.load(file)
 
-# API configuration
+# API configuration for the second app
 url = st.secrets["url"]
 headers = {
     'api-key': st.secrets["key"],
     'Content-Type': 'application/json'
 }
 
-# Mapping function to class
+# Mapping function to class for the second app
 function_mapping = {
     "Creation_dossier_kbis": 'POST',
     "Redaction_non_juridique": 'DRAFT',
@@ -56,6 +102,7 @@ function_mapping = {
     "Autre_demande": '0'
 }
 
+# Function to get model response for the second app
 def get_model_response(user_prompt):
     messages = [
         {
@@ -68,14 +115,14 @@ def get_model_response(user_prompt):
         }
     ]
     
-    data = {
+    data_request = {
         "model": "gpt-4o",
         "messages": messages,
         "tools": tools,
         "tool_choice": "required"
     }
     
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+    response = requests.post(url, headers=headers, data=json.dumps(data_request))
     
     if response.status_code != 200:
         return f"Error: {response.status_code} - {response.text}", "0"
@@ -92,84 +139,40 @@ def get_model_response(user_prompt):
         else:
             return "Unexpected response format.", "0"
 
-# Set page configuration
-st.set_page_config(
-    page_title="Intent Detection Playground",
-    page_icon="🔍",
-    layout="centered"
-)
+# App function for the second app
+def intent_detection():
+    st.markdown("# Intent Detection Playground", unsafe_allow_html=True)
 
-# Apply custom CSS for styling
-st.markdown(
-    """
-    <style>
-    :root {
-        --background-color: #f2f2f2;
-        --text-color: #222222;
-        --input-background: #e0e0e0;
-        --button-background: #4caf50;
-        --button-text-color: white;
-    }
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --background-color: #222222;
-            --text-color: #e0e0e0;
-            --input-background: #444444;
-        }
-    }
-    body {
-        background-color: var(--background-color);
-        color: var(--text-color);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .stTextInput > div > div > input {
-        background-color: var(--input-background);
-        border: 1px solid #666;
-        border-radius: 5px;
-        padding: 10px;
-    }
-    .stButton > button {
-        background-color: var(--button-background);
-        color: var(--button-text-color);
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-    .result-container {
-        background-color: var(--input-background);
-        color: var(--text-color);
-        border-radius: 5px;
-        padding: 20px;
-        margin-top: 20px;
-        box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-    }
-    h1 {
-        text-align: center;
-        color: var(--text-color);
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+    # Create a form for user input and submit button
+    with st.form(key='intent_form'):
+        user_prompt = st.text_input("Enter your prompt:", placeholder="Enter your prompt here")
+        submitted = st.form_submit_button("Submit")
 
-# Main content
-st.markdown("# Intent Detection Playground", unsafe_allow_html=True)
-
-# Create a form for user input and submit button
-with st.form(key='intent_form'):
-    user_prompt = st.text_input("Enter your prompt:", placeholder="Enter your prompt here")
-    submitted = st.form_submit_button("Submit")
-
-# Display results in a container
-if submitted:
-    with st.spinner("Processing..."):
-        intention, category = get_model_response(user_prompt)
-        st.markdown(f"""
-            <div class="result-container">
-                <h3>Results:</h3>
-                <p><strong>Intention:</strong> {intention}</p>
-                <p><strong>Category:</strong> {category}</p>
-            </div>
-        """, unsafe_allow_html=True)
+    # Display results in a container
+    if submitted:
+        with st.spinner("Processing..."):
+            intention, category = get_model_response(user_prompt)
+            st.markdown(f"""
+                <div class="result-container">
+                    <h3>Results:</h3>
+                    <p><strong>Intention:</strong> {intention}</p>
+                    <p><strong>Workflow:</strong> {category}</p>
+                </div>
+            """, unsafe_allow_html=True)
         
-st.markdown('<p style="text-align: right; color: gray; font-size: 0.8em;">Fait avec ❤️ par Mathieu</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: right; color: gray; font-size: 0.8em;">Fait avec ❤️ par Mathieu</p>', unsafe_allow_html=True)
+
+# Main function to run the combined app
+def main():
+    # Sidebar for navigation
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Go to", ["Intentions", "Playground"])
+
+    if page == "Intentions":
+        app1()
+    elif page == "Playground":
+        intent_detection()
+
+# Run the app
+if __name__ == "__main__":
+    main()
