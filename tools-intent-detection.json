@@ -2,8 +2,8 @@
     {
       "type": "function",
       "function": {
-        "name": "Creation_dossier_kbis",
-        "description": "L'utilisateur partage un extrait de kbis ou souhaite créer un dossier",
+        "name": "Creation_dossier",
+        "description": "Creation de dossier",
         "parameters": { "type": "object", "properties": {} }
       }
     },
@@ -11,7 +11,7 @@
       "type": "function",
       "function": {
         "name": "Redaction_non_juridique",
-        "description": "Redaction de correspondances exclusivement non juridiques (email, courrier, lettre, newsletter ou publication réseaux sociaux)",
+        "description": "Redaction de correspondances exclusivement non juridiques et sans conséquence légale (email, courrier, lettre, newsletter ou publication réseaux sociaux)",
         "parameters": { "type": "object", "properties": {} }
       }
     },
@@ -19,7 +19,7 @@
       "type": "function",
       "function": {
         "name": "Redaction_juridique",
-        "description": "Redaction de contenu juridique",
+        "description": "Redaction de contenu ayant une portée légale (clauses, contrats, résolutions, etc.)",
         "parameters": { "type": "object", "properties": {} }
       }
     },
@@ -27,7 +27,7 @@
       "type": "function",
       "function": {
         "name": "Resume",
-        "description": "Resume un texte",
+        "description": "Resume, reformule ou corrige un texte",
         "parameters": { "type": "object", "properties": {} }
       }
     },
@@ -51,7 +51,7 @@
       "type": "function",
       "function": {
         "name": "Information_utilisateur",
-        "description": "Informations sur les utilisateurs (id, type, etc.)",
+        "description": "Informations sur les utilisateurs",
         "parameters": { "type": "object", "properties": {} }
       }
     }, 
