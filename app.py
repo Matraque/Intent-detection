@@ -82,7 +82,7 @@ headers = {
 
 # Mapping function to class
 function_mapping = {
-    "Creation_dossier_kbis": 'POST',
+    "Creation_dossier": 'POST',
     "Redaction_non_juridique": 'DRAFT',
     "Redaction_juridique": '0',
     "Resume": '0',
