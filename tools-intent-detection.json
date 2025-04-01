@@ -74,6 +74,14 @@
     {
       "type": "function",
       "function": {
+        "name": "Creation_fiche_personne",
+        "description": "Création d'une personne, d'une société, d'une fiche personne ou d'une fiche société",
+        "parameters": { "type": "object", "properties": {} }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
         "name": "Autre_demande",
         "description": "Traite toutes les demandes qui ne sont pas couvertes par les autres fonctions",
         "parameters": { "type": "object", "properties": {} }
